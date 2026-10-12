@@ -1,0 +1,18 @@
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@1.0.0
+  vite-plus: 1.0.0
+overrides:
+  vite@*: "catalog:"
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: "*"
+# Do not resolve versions published less than 7 days ago (minutes).
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  # Built locally from ../maplibre-tile-spec (see README).
+  - "@maplibre/mlt-wasm"
+  # The Vite+ toolchain the project was scaffolded with.
+  - vite-plus
+  - "@voidzero-dev/*"

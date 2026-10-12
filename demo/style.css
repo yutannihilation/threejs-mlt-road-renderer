@@ -1,0 +1,129 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  font-family: system-ui, sans-serif;
+  background: #eee;
+  color: #222;
+}
+
+#map {
+  position: absolute;
+  inset: 0;
+}
+
+.panel {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 300px;
+  padding: 12px 14px;
+  border-radius: 6px;
+  background: rgb(255 255 255 / 0.9);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.2);
+  font-size: 13px;
+  line-height: 1.4;
+  z-index: 1;
+}
+
+.panel h1 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.panel .scenes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0 0 8px;
+}
+
+.panel .scenes button {
+  padding: 2px 8px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background: #fff;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.panel .scenes button:hover {
+  background: #f1efe9;
+}
+
+.panel .modes {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+  font-size: 12px;
+}
+
+.panel .toggle {
+  display: block;
+  margin: 0 0 8px;
+  font-size: 12px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  font-size: 12px;
+}
+
+.legend[hidden] {
+  display: none;
+}
+
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 4px;
+  border: 1px solid #555;
+  border-radius: 2px;
+  vertical-align: -1px;
+}
+
+.panel .stats {
+  margin: 8px 0 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.panel .note {
+  margin: 0;
+  color: #666;
+  font-size: 11px;
+}
+
+.popup {
+  max-height: 60vh;
+  overflow: auto;
+  font-size: 12px;
+}
+
+.popup .where {
+  margin-bottom: 6px;
+  color: #666;
+  font-size: 11px;
+}
+
+.popup table {
+  border-collapse: collapse;
+}
+
+.popup th {
+  padding: 1px 8px 1px 0;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.popup td {
+  padding: 1px 0;
+  word-break: break-all;
+}

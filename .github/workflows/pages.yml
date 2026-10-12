@@ -1,0 +1,86 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; a newer push supersedes a queued one, but never cancels one in progress.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  # The commit of maplibre/maplibre-tile-spec tagged mlt-wasm-js-v0.1.44, which @maplibre/mlt-wasm is
+  # built from: the package on npm ships without its wasm.
+  MLT_COMMIT: 101f1b07f391620f9dbf98a45ae7d4574f9ebaf8
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Side by side, as package.json links ../maplibre-tile-spec/rust/mlt-wasm.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: threejs-mlt-road-renderer
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: maplibre/maplibre-tile-spec
+          ref: ${{ env.MLT_COMMIT }}
+          path: maplibre-tile-spec
+          persist-credentials: false
+
+      - uses: voidzero-dev/setup-vp@3754dd7dbdb32bd8f6d28b6043de13ad3a75f21f # v1.21.1
+        with:
+          working-directory: threejs-mlt-road-renderer
+          node-version: "24"
+          cache: true
+          # mlt-wasm must be built before the install copies it in.
+          run-install: false
+
+      # As maplibre-tile-spec's CI builds the package: nightly with rust-src for build-std, wasm-pack, and the
+      # wasm-bindgen CLI its lockfile pins.
+      - run: rustup toolchain install nightly --profile minimal --component rust-src --target wasm32-unknown-unknown
+      - uses: taiki-e/install-action@83ac0ad63c0167e6f06796fab0fce28db1bf3db0 # v2.87.22
+        with:
+          tool: just,cargo-binstall,wasm-pack
+      - name: Build @maplibre/mlt-wasm
+        working-directory: maplibre-tile-spec
+        run: just -v rust::wasm-build
+
+      - name: Install, check and test
+        working-directory: threejs-mlt-road-renderer
+        run: |
+          vp install --frozen-lockfile
+          vp check
+          vp test
+      - id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Build
+        working-directory: threejs-mlt-road-renderer
+        env:
+          # The site's path, `/threejs-mlt-road-renderer`, as Vite's `base`; the build copies the
+          # tiles in ./data to `tiles/` under it.
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+        run: vp build --base "$BASE_PATH/"
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: threejs-mlt-road-renderer/dist-demo
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

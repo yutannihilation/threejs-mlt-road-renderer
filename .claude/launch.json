@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "node_modules/.bin/vp",
+      "runtimeArgs": ["dev", "--port", "5175", "--strictPort"],
+      "port": 5175
+    }
+  ]
+}
