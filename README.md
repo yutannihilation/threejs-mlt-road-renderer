@@ -69,17 +69,6 @@ avoids.
 
 ## Development
 
-`@maplibre/mlt-wasm` is linked from a sibling checkout of
-[maplibre-tile-spec](https://github.com/maplibre/maplibre-tile-spec) at the tag
-[`mlt-wasm-js-v0.1.44`](https://github.com/maplibre/maplibre-tile-spec/releases/tag/mlt-wasm-js-v0.1.44),
-built with `npm run build` in `rust/mlt-wasm` (the package on npm ships without its wasm):
-
-```text
-repo/
-├── maplibre-tile-spec/          at mlt-wasm-js-v0.1.44
-└── threejs-mlt-road-renderer/   this repository
-```
-
 ```bash
 vp install
 vp dev            # the demo on http://localhost:5173/
@@ -90,8 +79,7 @@ vp build          # the demo, with its tiles, in dist-demo/
 bun scripts/figures/render.ts  # regenerate the design notes' figures
 ```
 
-Pushes to `main` deploy the demo to GitHub Pages ([`.github/workflows/pages.yml`](.github/workflows/pages.yml)),
-building `@maplibre/mlt-wasm` from maplibre-tile-spec at the tagged commit pinned there.
+Pushes to `main` deploy the demo to GitHub Pages ([`.github/workflows/pages.yml`](.github/workflows/pages.yml)).
 
 ### Demo data
 

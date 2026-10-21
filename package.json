@@ -23,7 +23,7 @@
     "prepare": "vp config"
   },
   "devDependencies": {
-    "@maplibre/mlt-wasm": "file:../maplibre-tile-spec/rust/mlt-wasm",
+    "@maplibre/mlt-wasm": "0.2.1",
     "@types/node": "^24.19.0",
     "@types/three": "0.186.0",
     "maplibre-gl": "5.24.0",
