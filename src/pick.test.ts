@@ -33,14 +33,14 @@ function target(lines: Lines, visible?: number[], outerHalfWidth?: number): Pick
 describe("projectVertex", () => {
   test("places a tile vertex on screen through the tile's matrix", () => {
     // Tile unit 2048 is Mercator 0.5, the middle of a 100 px view.
-    expect(projectVertex(frame, metre, matrix, view, 2048, 2048, 10000)).toEqual([50, 50]);
-    expect(projectVertex(frame, metre, matrix, view, 0, 4096, 10000)).toEqual([0, 100]);
+    expect(projectVertex(frame, metre, matrix, view, 2048, 2048, 0)).toEqual([50, 50]);
+    expect(projectVertex(frame, metre, matrix, view, 0, 4096, 0)).toEqual([0, 100]);
   });
 
   test("is null behind the camera", () => {
     const behind = [...matrix];
     behind[15] = -1;
-    expect(projectVertex(frame, metre, behind, view, 2048, 2048, 10000)).toBeNull();
+    expect(projectVertex(frame, metre, behind, view, 2048, 2048, 0)).toBeNull();
   });
 });
 
@@ -49,12 +49,12 @@ describe("pickRoad", () => {
   // in Mercator units, and so a ribbon, grows without bound.
   const layer = linesOf(
     [
-      [0, 2048, 10000],
-      [4096, 2048, 10000],
+      [0, 2048, 0],
+      [4096, 2048, 0],
     ],
     [
-      [3277, 1024, 10000],
-      [3277, 4096, 10000],
+      [3277, 1024, 0],
+      [3277, 4096, 0],
     ],
   );
 
@@ -83,12 +83,12 @@ describe("pickRoad", () => {
     // minus the elevation, so higher is nearer.
     const crossing = linesOf(
       [
-        [0, 2048, 10000],
-        [4096, 2048, 10000],
+        [0, 2048, 0],
+        [4096, 2048, 0],
       ],
       [
-        [1024, 1800, 10030],
-        [3072, 2300, 10030],
+        [1024, 1800, 30],
+        [3072, 2300, 30],
       ],
     );
     const toward = [...matrix];
@@ -106,10 +106,10 @@ describe("pickRoad", () => {
     // the view shows another junction entirely.
     const index = { z: 14, x: 14341, y: 6472 };
     const base = linesOf([
-      [2629, 4063, 1001586],
-      [2636, 4063, 1001582],
-      [2714, 4052, 1001579],
-      [2767, 4047, 1001582],
+      [2629, 4063, 1586],
+      [2636, 4063, 1582],
+      [2714, 4052, 1579],
+      [2767, 4047, 1582],
     ]);
     const table = tableOf(1, undefined, 3.4115774631500244);
     const m = [

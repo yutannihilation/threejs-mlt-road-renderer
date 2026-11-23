@@ -56,9 +56,10 @@ ground at every zoom. See [`src/style.ts`](src/style.ts) for the full contract a
 ## Data
 
 The layer expects MLT tiles with a layer of 3D line strings: road centrelines whose links share
-exact end points where they meet, with z as elevation in metres (on a grid given by the tile's z
-step). Every zoom level should hold the detail you want to draw at it. Properties are free-form;
-your style reads them.
+exact end points where they meet, with z as height in metres above mean sea level (on a grid given
+by the tile's z step, in the `absolute` height mode; the layer has no terrain to stand
+`relativeToGround` heights on, and rejects them). Every zoom level should hold the detail you want
+to draw at it. Properties are free-form; your style reads them.
 
 ## How it works
 

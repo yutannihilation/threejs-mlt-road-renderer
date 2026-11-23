@@ -9,9 +9,11 @@ const layer: MltColumnLayer = {
   featureCount: 3,
   geometry: {
     types: Uint8Array.of(0, 0, 0),
+    layout: "outlines",
     dimension: 3,
     vertices: Int32Array.of(0, 0, 0, 1, 1, 1, 2, 2, 2),
     zStep: 0,
+    heightMode: "absolute",
   },
   properties: [
     // Feature 1 has no rdCtg.
@@ -24,6 +26,8 @@ const layer: MltColumnLayer = {
     { name: "motorway", type: "i32", values: Int32Array.of(0, 9, 1) },
     { name: "toll", type: "bool", values: Uint8Array.of(1, 0, 1) },
   ],
+  vertexValues: [],
+  triangleValues: [],
 };
 
 describe("featureProps", () => {

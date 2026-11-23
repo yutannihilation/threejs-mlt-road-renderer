@@ -387,7 +387,7 @@ export function tessellateRoads(
   cap: Cap,
 ): RoadMesh {
   const { vertices, startClipped, endClipped } = input;
-  const { origin, scale, zScale, zOffset } = frame;
+  const { origin, scale, zScale } = frame;
   const estimate = (vertices.length / 3) * 2;
   const positions = new Growing((n) => new Float32Array(n), estimate * 3);
   const extrudes = new Growing((n) => new Float32Array(n), estimate * 4);
@@ -415,7 +415,7 @@ export function tessellateRoads(
   const moveTo = (k: number) => {
     px = vertices[k] * scale;
     py = vertices[k + 1] * scale;
-    const metres = vertices[k + 2] * zScale + zOffset;
+    const metres = vertices[k + 2] * zScale;
     pz = metres * metre * metreScale(origin[1] + py);
   };
 

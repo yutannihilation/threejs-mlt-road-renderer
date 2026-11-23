@@ -11,10 +11,10 @@ const tile = lineTile(data, { z: 14, x: 14342, y: 6472 }, "roads");
 describe("elevationRange", () => {
   test("is the lowest and highest vertex of the tile, in metres", () => {
     const { vertices } = tile.layer.geometry;
-    const { zScale, zOffset } = tile.frame;
+    const { zScale } = tile.frame;
     let [lo, hi] = [Infinity, -Infinity];
     for (let k = 2; k < vertices.length; k += 3) {
-      const z = vertices[k] * zScale + zOffset;
+      const z = vertices[k] * zScale;
       lo = Math.min(lo, z);
       hi = Math.max(hi, z);
     }

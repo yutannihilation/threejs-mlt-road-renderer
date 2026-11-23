@@ -14,9 +14,8 @@ export interface TileFrame {
   readonly origin: readonly [number, number];
   /** Mercator units per tile coordinate. */
   readonly scale: number;
-  /** Metres are `z * zScale + zOffset`, the layer's `-10000 + z * 10 ** zStep`. */
+  /** Metres above mean sea level are `z * zScale`, the layer's `z * 10 ** zStep`. */
   readonly zScale: number;
-  readonly zOffset: number;
 }
 
 /**
@@ -33,13 +32,12 @@ export function tileFrame(tile: TileIndex, extent: number, zStep: number): TileF
     origin: [tile.x / tiles, tile.y / tiles],
     scale: 1 / (extent * tiles),
     zScale: 10 ** zStep,
-    zOffset: -10000,
   };
 }
 
 /** A frame for vertices whose z is already in metres. */
 export function metreFrame(tile: TileIndex, extent: number): TileFrame {
-  return { ...tileFrame(tile, extent, 0), zScale: 1, zOffset: 0 };
+  return tileFrame(tile, extent, 0);
 }
 
 /**

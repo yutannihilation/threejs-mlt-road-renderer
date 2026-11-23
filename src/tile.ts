@@ -8,7 +8,7 @@ export interface LineTile {
   readonly layer: MltColumnLayer;
   readonly ids: LineIds;
   readonly frame: TileFrame;
-  /** The layer's z grid: metres are `toElevation(z, zStep)`. */
+  /** The layer's z grid: metres above mean sea level are `toElevation(z, zStep)`. */
   readonly zStep: number;
 }
 
@@ -16,7 +16,10 @@ export function tileUrl(template: string, { z, x, y }: TileIndex): string {
   return template.replace("{z}", String(z)).replace("{x}", String(x)).replace("{y}", String(y));
 }
 
-/** Throws when the layer is missing, repeated, not 3D, or holds anything but lines. */
+/**
+ * Throws when the layer is missing, repeated, not 3D, has heights above the terrain rather than
+ * above sea level (there is no terrain to stand them on), or holds anything but lines.
+ */
 export function lineTile(data: Uint8Array, index: TileIndex, layerName: string): LineTile {
   const { layers } = decodeTileColumns(data, { layers: [layerName] });
   if (layers.length !== 1) {
@@ -25,6 +28,11 @@ export function lineTile(data: Uint8Array, index: TileIndex, layerName: string):
   const [layer] = layers;
   const { extent, geometry } = layer;
   if (geometry.dimension !== 3) throw new Error(`layer "${layerName}" has no z coordinates`);
+  if (geometry.heightMode !== "absolute") {
+    throw new Error(
+      `layer "${layerName}" has ${geometry.heightMode} heights, expected absolute (above sea level)`,
+    );
+  }
   return {
     index,
     layer,
