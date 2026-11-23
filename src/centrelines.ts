@@ -10,7 +10,7 @@ import { metreScale, type TileFrame } from "./transform";
  */
 export function centrelineSegments(lines: Lines, frame: TileFrame, metre: number): Float32Array {
   const { vertices, lineStart } = lines;
-  const { origin, scale, zScale, zOffset } = frame;
+  const { origin, scale, zScale } = frame;
   const n = lineStart.length - 1;
   let count = 0;
   for (let l = 0; l < n; l++) count += Math.max(0, lineStart[l + 1] - lineStart[l] - 1);
@@ -18,7 +18,7 @@ export function centrelineSegments(lines: Lines, frame: TileFrame, metre: number
   let o = 0;
   const put = (k: number) => {
     const [x, y] = [vertices[k * 3] * scale, vertices[k * 3 + 1] * scale];
-    const metres = vertices[k * 3 + 2] * zScale + zOffset;
+    const metres = vertices[k * 3 + 2] * zScale;
     out.set([x, y, metres * metre * metreScale(origin[1] + y)], o);
     o += 3;
   };

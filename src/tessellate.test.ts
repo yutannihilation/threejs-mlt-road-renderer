@@ -158,8 +158,8 @@ const rounded = (pairs: number[][]) =>
 describe("tessellateRoads: a single line", () => {
   test("a straight segment is a quad on the centreline, pushed out by the half width", () => {
     const layer = linesOf([
-      [0, 2048, 10500],
-      [10, 2048, 10600],
+      [0, 2048, 500],
+      [10, 2048, 600],
     ]);
     const t = tableOf(1);
     const m = mesh(layer, { table: t });

@@ -37,7 +37,7 @@ export function piecesOf(
   const { vertices } = tile.layer.geometry;
   const { extent } = tile.layer;
   const { lineStart, featureOfLine } = tile.ids;
-  const { zScale, zOffset } = tile.frame;
+  const { zScale } = tile.frame;
   const [lo, hi] = [-buffer, extent + buffer];
   const [dx, dy] = offset;
   const onBox = (k: number) =>
@@ -68,7 +68,7 @@ export function piecesOf(
       const o = (v - first) * 3;
       out[o] = vertices[v * 3] + dx;
       out[o + 1] = vertices[v * 3 + 1] + dy;
-      out[o + 2] = vertices[v * 3 + 2] * zScale + zOffset;
+      out[o + 2] = vertices[v * 3 + 2] * zScale;
     }
     pieces.push({
       vertices: out,

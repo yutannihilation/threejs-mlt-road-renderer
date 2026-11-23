@@ -505,7 +505,7 @@ describe("the crossing at node (4248, 2123) across tiles 18/229456/103565 and 18
   test("piecesOf puts z in metres", () => {
     const [p] = piecesOf(a.tile, a.props, 64, [0, 0]);
     const z = a.tile.layer.geometry.vertices[2];
-    expect(p.vertices[2]).toBeCloseTo(z * a.tile.frame.zScale + a.tile.frame.zOffset, 9);
+    expect(p.vertices[2]).toBeCloseTo(z * a.tile.frame.zScale, 9);
   });
 
   test("piecesOf keeps only the lines whose bounds meet a box, given one", () => {

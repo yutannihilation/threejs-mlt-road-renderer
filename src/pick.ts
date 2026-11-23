@@ -59,7 +59,7 @@ function projectWithDepth(
 ): [number, number, number] | null {
   const lx = x * frame.scale;
   const ly = y * frame.scale;
-  const lz = (z * frame.zScale + frame.zOffset) * metre * metreScale(frame.origin[1] + ly);
+  const lz = z * frame.zScale * metre * metreScale(frame.origin[1] + ly);
   return projectLocal(m, view, lx, ly, lz);
 }
 
@@ -126,12 +126,12 @@ export function pickRoad(
     const ray = [far[0] - near[0], far[1] - near[1], far[2] - near[2]];
     if (!ray[2]) continue;
     const { vertices, lineStart } = lines;
-    const { scale, origin, zScale, zOffset } = frame;
+    const { scale, origin, zScale } = frame;
     const [x0, y0, x1, y1] = clip ?? [-Infinity, -Infinity, Infinity, Infinity];
     /** Vertex `v` in Mercator units relative to the tile, its elevation scaled as the shader does. */
     const local = (v: number): [number, number, number] => {
       const ly = vertices[v * 3 + 1] * scale;
-      const metres = vertices[v * 3 + 2] * zScale + zOffset;
+      const metres = vertices[v * 3 + 2] * zScale;
       return [vertices[v * 3] * scale, ly, metres * metre * metreScale(origin[1] + ly)];
     };
     for (let line = 0; line + 1 < lineStart.length; line++) {
