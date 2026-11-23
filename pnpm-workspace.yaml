@@ -1,6 +1,6 @@
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@1.0.0
-  vite-plus: 1.0.0
+  vite: npm:@voidzero-dev/vite-plus-core@8.3.8000
+  vite-plus: 1.7.0
 overrides:
   vite@*: "catalog:"
 peerDependencyRules:
@@ -16,3 +16,12 @@ minimumReleaseAgeExclude:
   # The Vite+ toolchain the project was scaffolded with.
   - vite-plus
   - "@voidzero-dev/*"
+  # Exact versions vite-plus 1.7.0 pins, published 2026-11-16, and tsrs 7.1.0-beta.tsrs4, published
+  # 2026-11-20; drop these once they are a week old.
+  - oxlint
+  - "@oxlint/*"
+  - oxfmt
+  - "@oxfmt/*"
+  - "@oxc-project/*"
+  - tsrs
+  - "@tsrs/*"

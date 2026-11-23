@@ -17,8 +17,8 @@
   },
   "scripts": {
     "dev": "vp dev",
-    "build": "tsc && vp build",
-    "build:lib": "vp build --config vite.lib.config.ts && tsc -p tsconfig.lib.json",
+    "build": "tsrs && vp build",
+    "build:lib": "vp build --config vite.lib.config.ts && tsrs -p tsconfig.lib.json",
     "preview": "vp preview",
     "prepare": "vp config"
   },
@@ -28,7 +28,8 @@
     "@types/three": "0.186.0",
     "maplibre-gl": "5.24.0",
     "three": "0.186.1",
-    "typescript": "~6.0.2",
+    "tsrs": "7.1.0-beta.tsrs4",
+    "typescript": "~7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },

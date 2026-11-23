@@ -162,7 +162,7 @@ So a frame costs `tiles × groups × 2` draw calls, whatever the number of roads
 The vertex shader does three things:
 
 1. Look up both half widths for this pass and apply the offset: `local = position.xy + (e1 ×
-w(l1) + e2 × w(l2)) × metre`. Widths are metres, but positions are Mercator units, and a metre
+   w(l1) + e2 × w(l2)) × metre`. Widths are metres, but positions are Mercator units, and a metre
    in Mercator units grows towards the poles: `metre = uMetre × cosh(π(1 − 2y))` at the vertex's
    latitude.
 2. Project with the tile's matrix.
